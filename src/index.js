@@ -18,10 +18,10 @@ root.render(
             <QuizProvider>
                 <Routes>
                     <Route path="/" element={<App />} />
-                    <Route path="/skin" element={<SkinImgQuiz />} />
+                    {/* <Route path="/skin" element={<SkinImgQuiz />} />
                     <Route path="/spell_name" element={<SpellIconQuiz />} />
                     <Route path="/spell_icon" element={<SpellNameQuiz />} />
-                    <Route path="/story" element={<StoryQuiz />} />
+                    <Route path="/story" element={<StoryQuiz />} /> */}
                 </Routes>
             </QuizProvider>
         </Router>

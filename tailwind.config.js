@@ -3,8 +3,11 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
-            width: {
+            spacing: {
+                45: '45px',
                 240: '240px',
+                280: '280px',
+                320: '320px',
             },
             colors: {
                 gray: {

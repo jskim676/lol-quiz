@@ -5,20 +5,24 @@ export interface ChampionSpell {
     name: string;
 }
 
-export interface ChampionData {
+export interface Champion {
+    version: string;
     id: string;
+    key: string;
     name: string;
-    spells: ChampionSpell[];
+    title: string;
+    // 필요한 다른 속성 추가
 }
 
-export interface AllChampionsData {
-    [key: string]: ChampionData;
+export interface ChampionData {
+    [key: string]: Champion;
 }
 
 export interface SelectedChampionDetails {
-    spells: { [key: string]: any };
+    name: string;
     skins: { [key: string]: any };
-    stories: { [key: string]: any };
+    spells: { [key: string]: any };
+    lore: { [key: string]: any };
 }
 
 export interface QuizSetup {

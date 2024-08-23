@@ -1,4 +1,4 @@
-const BASE_URL = 'https://ddragon.leagueoflegends.com/cdn/14.16.1';
+export const BASE_URL = 'https://ddragon.leagueoflegends.com/cdn/14.16.1';
 
 export const fetchAllChampionsData = async () => {
     const response = await fetch(`${BASE_URL}/data/ko_KR/champion.json`);
@@ -16,7 +16,6 @@ export const fetchMultipleRandomChampions = async (count: number, allChampionsDa
     if (allChampionsData) {
         const champions = Object.keys(allChampionsData);
         const detailsArray = [];
-
         for (let i = 0; i < count; i++) {
             const randomChampion = champions[Math.floor(Math.random() * champions.length)];
 

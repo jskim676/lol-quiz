@@ -1,37 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { AllChampionsData, QuizSetup, SelectedChampionDetails } from './types/championTypes';
+import { QuizSetup, SelectedChampionDetails } from './types/championTypes';
 import { fetchAllChampionsData, fetchMultipleRandomChampions } from './services/champion';
 import { useQuiz } from './contexts/QuizContext';
-import { useNavigate } from 'react-router-dom';
+import SpellNameQuiz from './pages/SpellNameQuiz';
+import SpellIconQuiz from './pages/SpellIconQuiz';
+import SkinImgQuiz from './pages/SkinImgQuiz';
+import StoryQuiz from './pages/StoryQuiz';
 
 function App() {
-    const [allChampionsData, setAllChampionsData] = useState<AllChampionsData | null>(null);
     const [championDetailsArray, setChampionDetailsArray] = useState<SelectedChampionDetails[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // 선택된 카테고리 상태
     const { setQuizSetup } = useQuiz();
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetchAllChampionsData()
             .then((data) => {
-                setAllChampionsData(data);
+                return fetchMultipleRandomChampions(20, data);
+            })
+            .then((detailsArray) => {
+                setChampionDetailsArray(detailsArray);
             })
             .catch((error) => {
                 console.error('데이터 가져오기 오류:', error);
             });
     }, []);
-
-    useEffect(() => {
-        if (allChampionsData) {
-            fetchMultipleRandomChampions(20, allChampionsData)
-                .then((detailsArray) => {
-                    setChampionDetailsArray(detailsArray);
-                })
-                .catch((error) => {
-                    console.error('랜덤 챔피언 데이터 가져오기 오류:', error);
-                });
-        }
-    }, [allChampionsData]);
 
     const handleCategoryClick = (category: string) => {
         const newQuizSetup: QuizSetup = {
@@ -46,8 +39,27 @@ function App() {
         });
 
         setQuizSetup(newQuizSetup);
-        navigate(`/${category}`);
+        setSelectedCategory(category);
     };
+
+    const renderQuizComponent = () => {
+        switch (selectedCategory) {
+            case 'spell_name':
+                return <SpellNameQuiz />;
+            case 'spell_icon':
+                return <SpellIconQuiz />;
+            case 'skin':
+                return <SkinImgQuiz />;
+            case 'story':
+                return <StoryQuiz />;
+            default:
+                return null;
+        }
+    };
+
+    if (selectedCategory) {
+        return renderQuizComponent();
+    }
 
     return (
         <div className="App">
